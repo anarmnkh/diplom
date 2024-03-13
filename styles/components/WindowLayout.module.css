@@ -1,0 +1,17 @@
+/* styles/components/WindowLayout.module.css */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .windowsContainer {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .optionsWindowContainer {
+    margin-left: 20px; /* Adjust the margin as needed */
+  }
+  

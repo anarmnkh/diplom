@@ -1,16 +1,14 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+// pages/index.js
+import React from 'react';
+import SalaryInfo from '../components/SalaryInfo';
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
+const IndexPage = () => {
   return (
-    <div className={styles.container}>
-      
-      тэтгэвэр төлөвлөт
-      
+    <div>
+      <h1>Welcome to Salary Information</h1>
+      <SalaryInfo />
     </div>
   );
-}
+};
+
+export default IndexPage;
