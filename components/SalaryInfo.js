@@ -1,10 +1,8 @@
-// components/SalaryInfo.js
 import React, { useState } from 'react';
 import styles from '../styles/components/SalaryInfo.module.css';
 
-const SOCIAL_SECURITY_RATE = 0.135; // Social security contribution rate (13.5%)
-const OLD_AGE_PENSION_RATE = 0.1875; // Old age pension rate (0.1875%)
-
+const SOCIAL_SECURITY_RATE = 0.135; // нийгмийн даатгалын шимтгэл (13.5%)
+const NAME_ACCOUNT = 0.001875; 
 const MAX_SALARIES = {
   2020: 4200000,
   2021: 4200000,
@@ -12,9 +10,17 @@ const MAX_SALARIES = {
   2023: 5500000,
   2024: 4620000
 };
+const MAX_SOCIALSECURITY = {
+  2020: 567000,
+  2021: 567000,
+  2022: 621000,
+  2023: 742500,
+  2024: 623700
+}
+
+const PensionRate = 0.001875; // Pension rate is 0.1875%
 
 const SalaryInfo = () => {
-  const [monthsWorked, setMonthsWorked] = useState(0);
   const [salaries, setSalaries] = useState({
     2020: 0,
     2021: 0,
@@ -31,55 +37,59 @@ const SalaryInfo = () => {
     2024: 0
   });
 
+  const [totalMonthsOfSocialSecurity, setTotalMonthsOfSocialSecurity] = useState(0);
   const [averageSalary, setAverageSalary] = useState(0);
-  const [oldAgePension, setOldAgePension] = useState(0);
-
-  const handleMonthsWorkedChange = (e) => {
-    const value = parseInt(e.target.value);
-    setMonthsWorked(value);
-  };
+  const [pension, setPension] = useState(0); // State to hold the calculated pension amount
 
   const handleSalaryChange = (year, value) => {
-    let updatedValue = value;
-
-    if (MAX_SALARIES.hasOwnProperty(year) && value > MAX_SALARIES[year]) {
-      updatedValue = MAX_SALARIES[year];
+    let updatedSalary = value;
+    let updatedSocialSecurity = value * SOCIAL_SECURITY_RATE;
+   
+    if (value > MAX_SALARIES[year]) {
+      updatedSocialSecurity = MAX_SOCIALSECURITY[year];
     }
 
-    const updatedSalaries = { ...salaries, [year]: updatedValue };
-    const updatedSocialSecurity = { ...socialSecurityContributions, [year]: (updatedValue * SOCIAL_SECURITY_RATE).toFixed(2) };
+    const updatedSalaries = { ...salaries, [year]: updatedSalary };
+    const updatedSocialSecurityContributions = { ...socialSecurityContributions, [year]: updatedSocialSecurity.toFixed(2) };
     setSalaries(updatedSalaries);
-    setSocialSecurityContributions(updatedSocialSecurity);
+    setSocialSecurityContributions(updatedSocialSecurityContributions);
+
+
+
+   
 
     // Calculate average salary
     const totalSalaries = Object.values(updatedSalaries).reduce((total, salary) => total + salary, 0);
-    const numMonths = monthsWorked || Object.keys(updatedSalaries).length * 12; // Use monthsWorked if provided, otherwise count from salaries
-    const newAverageSalary = totalSalaries / numMonths;
+    const numYears = Object.keys(updatedSalaries).length;
+    const newAverageSalary = totalSalaries / numYears;
     setAverageSalary(newAverageSalary);
 
-    // Calculate old age pension
-    const newOldAgePension = newAverageSalary * OLD_AGE_PENSION_RATE * numMonths;
-    setOldAgePension(newOldAgePension);
+    // Calculate total months of social security payments
+    //const totalMonths = Object.values(socialSecurityContributions).reduce((total, contribution) => total + parseFloat(contribution) / (value * SOCIAL_SECURITY_RATE), 0);
+    //setTotalMonthsOfSocialSecurity(totalMonths);
+    // Calculate pension
+    const calculatedPension = (newAverageSalary * PensionRate * totalMonthsOfSocialSecurity).toFixed(2);
+    setPension(calculatedPension);
   };
 
   return (
     <div className={styles.container}>
-      <h2>Salary Information</h2>
+      <h2>Нийгмийн даатгалын шимтгэл төлөлт</h2>
       <div>
-        <label htmlFor="monthsWorked">Total number of months worked:</label>
-        <input
-          type="number"
-          id="monthsWorked"
-          value={monthsWorked}
-          onChange={handleMonthsWorkedChange}
-        />
+        <label htmlFor="totalMonthsInput">Нийгмийн даатгалын шимтгэлийн төлсөн нийт сарын тоо:</label>
+          <input
+            id="totalMonthsInput"
+            type="number"
+            value={totalMonthsOfSocialSecurity}
+            onChange={(e) => setTotalMonthsOfSocialSecurity(parseInt(e.target.value))}
+          />
       </div>
       <table className={styles.salaryTable}>
         <thead>
           <tr>
-            <th>Year</th>
-            <th>Salary</th>
-            <th>Social Security Contributions</th>
+            <th>Он</th>
+            <th>Цалингийн хэмжээ </th>
+            <th>Сайн дурын нийгмийн даатгалын шимтгэл</th>
           </tr>
         </thead>
         <tbody>
@@ -99,8 +109,9 @@ const SalaryInfo = () => {
         </tbody>
       </table>
       <div>
-        <h3>Average Salary: {averageSalary.toFixed(2)}</h3>
-        <h3>Monthly Old Age Pension: {oldAgePension.toFixed(2)}</h3>
+        <h3>Дундаж цалин: {averageSalary.toFixed(2)}</h3>
+        <h3>Тэтгэвэр: {pension}</h3>
+       
       </div>
     </div>
   );

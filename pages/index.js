@@ -5,7 +5,7 @@ import SalaryInfo from '../components/SalaryInfo';
 const IndexPage = () => {
   return (
     <div>
-      <h1>Welcome to Salary Information</h1>
+      <h1>Тэтгэвэр төлөвлөлт</h1>
       <SalaryInfo />
     </div>
   );
