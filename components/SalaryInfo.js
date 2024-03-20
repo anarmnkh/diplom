@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import styles from '../styles/components/SalaryInfo.module.css';
 
 const SOCIAL_SECURITY_RATE = 0.135; // нийгмийн даатгалын шимтгэл (13.5%)
-const NAME_ACCOUNT = 0.001875; 
+const PensionRate = 0.001875; // Pension rate is 0.1875%
+//const pension 
 const MAX_SALARIES = {
   2020: 4200000,
   2021: 4200000,
@@ -18,7 +19,7 @@ const MAX_SOCIALSECURITY = {
   2024: 623700
 }
 
-const PensionRate = 0.001875; // Pension rate is 0.1875%
+
 
 const SalaryInfo = () => {
   const [salaries, setSalaries] = useState({
@@ -42,6 +43,8 @@ const SalaryInfo = () => {
   const [pension, setPension] = useState(0); // State to hold the calculated pension amount
 
   const handleSalaryChange = (year, value) => {
+      
+
     let updatedSalary = value;
     let updatedSocialSecurity = value * SOCIAL_SECURITY_RATE;
    
@@ -74,7 +77,7 @@ const SalaryInfo = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Нийгмийн даатгалын шимтгэл төлөлт</h2>
+      <h2>Тэтгэвэр төлөвлөлт</h2>
       <div>
         <label htmlFor="totalMonthsInput">Нийгмийн даатгалын шимтгэлийн төлсөн нийт сарын тоо:</label>
           <input
@@ -110,8 +113,8 @@ const SalaryInfo = () => {
       </table>
       <div>
         <h3>Дундаж цалин: {averageSalary.toFixed(2)}</h3>
-        <h3>Тэтгэвэр: {pension}</h3>
-       
+        <h3>% Тэнцүүлсэн тэтгэвэр: {pension}</h3>
+        <h3>Бүрэн тэтгэвэр: </h3>
       </div>
     </div>
   );

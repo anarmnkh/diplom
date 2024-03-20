@@ -1,14 +1,16 @@
-// pages/index.js
-import React from 'react';
-import SalaryInfo from '../components/SalaryInfo';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
-const IndexPage = () => {
+import SalaryInfo from '@/components/SalaryInfo';
+
+const RetirementPage = () => {
   return (
     <div>
-      <h1>Тэтгэвэр төлөвлөлт</h1>
+      <Header />
       <SalaryInfo />
+      <Footer />
     </div>
   );
 };
 
-export default IndexPage;
+export default RetirementPage; 
