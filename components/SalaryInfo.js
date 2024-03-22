@@ -20,7 +20,6 @@ const MAX_SOCIALSECURITY = {
 }
 
 
-
 const SalaryInfo = () => {
   const [salaries, setSalaries] = useState({
     2020: 0,
