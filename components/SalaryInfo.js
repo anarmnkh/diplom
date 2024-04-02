@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../styles/components/SalaryInfo.module.css';
 
-const SOCIAL_SECURITY_RATE = 0.135; // нийгмийн даатгалын шимтгэл (13.5%)
+const SOCIAL_SECURITY_f = 0.135; // нийгмийн даатгалын шимтгэл (13.5%)
 const PensionRate = 0.001875; // Pension rate is 0.1875%
 //const pension 
 const MAX_SALARIES = {
@@ -113,7 +113,7 @@ const SalaryInfo = () => {
       <div>
         <h3>Дундаж цалин: {averageSalary.toFixed(2)}</h3>
         <h3>% Тэнцүүлсэн тэтгэвэр: {pension}</h3>
-        <h3>Бүрэн тэтгэвэр: </h3>
+        
       </div>
     </div>
   );
