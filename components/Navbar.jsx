@@ -1,4 +1,4 @@
-import { NAV_LINKS } from "@/constants"
+
 import Image from "next/image"
 import Link from "next/link"
 
@@ -6,34 +6,45 @@ import Link from "next/link"
 
 const Navbar = () => {
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <div>
-          <Link href="/">
-            <a id="link" className="text-white text-xl font-bold">Next.js App</a>
-          </Link>
-        </div>
-        <div>
-          <ul className="flex space-x-4">
-            <li>
-              <Link href="/">
-                <a id="link" className="text-white hover:text-gray-300">Home</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/about">
-                <a  id="link" className="text-white hover:text-gray-300">About</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact">
-                <a id="link" className="text-white hover:text-gray-300">Contact</a>
-              </Link>
-            </li>
-          </ul>
-        </div>
+    <nav className="bg-white-800 p-4">
+    <div className="container mx-auto flex justify-between items-center">
+      
+      <div className="flex items-center">
+        <ul className="flex space-x-10 mr-4">
+          <li>
+            <Link href="/" legacyBehavior>
+              <a className="text-black hover:text-red-500 ">Нүүр</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/news" legacyBehavior>
+              <a className="text-black hover:text-red-500">Мэдээ, мэдээлэл</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/law" legacyBehavior>
+              <a className="text-black hover:text-red-500">Хууль тогтоомж</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/service" legacyBehavior>
+              <a className="text-black hover:text-red-500">Үйлчилгээ</a>
+            </Link>
+          </li>
+        </ul>
       </div>
-    </nav>
+      <div > 
+      
+        <button className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+          Нэвтрэх
+        </button>
+        <button className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg space-x-16">
+          Бүртгүүлэх
+        </button>
+      </div>
+      
+    </div>
+  </nav>
     
   )
 }
