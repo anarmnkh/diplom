@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+"use client";
+
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Signup = () => {
 
@@ -9,6 +13,8 @@ const Signup = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
+    const router = useRouter();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -18,31 +24,46 @@ const Signup = () => {
         }
 
         try {
-            const res = await fetch('api/signup', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    firstname,
-                    lastname,
-                    email,
-                    phone,
-                    password
-                })
+            const resUserExists = await fetch("api/userExists", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email }),
             });
-            // Handle response
-            if (res.ok) {
-                console.log("Signup successful");
-            } else {
-                throw new Error("Signup failed");
+    
+            const { user } = await resUserExists.json();
+      
+            if (user) { 
+              setError("User already exists.");
+              return;
             }
-        } catch (error) {
-            setError("Signup failed. Please try again.");
-            console.error("Signup failed:", error);
-        }
-        // Clear error if signup is successful
-        setError("");
+      
+            const res = await fetch("api/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                firstname,
+                lastname,
+                email,
+                phone,
+                password,
+              }),
+            });
+      
+            if (res.ok) {
+              const form = e.target;
+              form.reset();
+              router.push("/");
+            } else {
+              console.log("User registration failed.");
+            }
+          } catch (error) {
+            console.log("Error during registration: ", error);
+          }
+      
     };
 
     return (
@@ -74,7 +95,7 @@ const Signup = () => {
                             </div>
                         </div>
                         <div className="px-8 mt-4">
-                            <button className="w-full py-3 px-4 border border-transparent text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-gray-400">Бүртгүүлэх</button>
+                            <button className="w-full py-3 px-4 border border-transparent text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-gray-500">Бүртгүүлэх</button>
                         </div>
                         <div className="px-8 mt-6 flex items-center justify-between">
                             <div className="w-full h-px bg-gray-300"></div>
@@ -82,7 +103,7 @@ const Signup = () => {
                             <div className="w-full h-px bg-gray-300"></div>
                         </div>
                         <div className="px-8 mt-4">
-                            <button className="w-full py-3 px-4 border border-transparent text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-gray-400">Gmail-ээр нэвтрэх</button>
+                            <button className="w-full py-3 px-4 border border-transparent text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-gray-500">Gmail-ээр нэвтрэх</button>
                             {error && (
                                 <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2"> {error} </div>
                             )}
@@ -95,3 +116,5 @@ const Signup = () => {
 }
 
 export default Signup;
+
+
