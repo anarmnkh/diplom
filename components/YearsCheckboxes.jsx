@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../styles/components/YearsCheckboxes.module.css';
+
 
 const YearsCheckboxes = () => {
   const [years, setYears] = useState({
@@ -15,7 +15,7 @@ const YearsCheckboxes = () => {
   // Define maximum and minimum wages for each year
   const wages = {
     2025: [
-      { salary: 660000, contribution: 89000 },
+      { salary: 660000,  contribution: 89000 },
       { salary: 700000, contribution: 94500 },
       { salary: 750000, contribution: 101250 },
       { salary: 800000, contribution: 108000 },
@@ -107,41 +107,47 @@ const YearsCheckboxes = () => {
   };
 
   return (
-    <div className={styles.checkboxContainer}>
-      {Object.keys(years).map((year) => (
-        <div key={year}>
-          <input
-            type="checkbox"
-            id={year}
-            checked={years[year]}
-            onChange={() => handleCheckboxChange(year)}
-          />
-          <label htmlFor={year}>{year}</label>
+ 
+  
+      <div className="container mx-auto py-8 rounded-md shadow-md bg-white">
+        <div className="flex flex-wrap justify-center items-center gap-4">
+          {Object.keys(years).map((year) => (
+            <div key={year} className="h-10 w-24 flex  justify-center  items-center border border-gray-300 rounded-full hover:border-black">
+              <input
+                type="checkbox"
+                id={year}
+                checked={years[year]}
+                onChange={() => handleCheckboxChange(year)}
+                className="form-checkbox h-3 w-3 text-indigo-600 mr-2"
+              />
+              <label htmlFor={year} className="ml-2">{year}</label>
+            </div>
+          ))} 
         </div>
-      ))}
-      {selectedYearInfo && (
-        <div>
-          <h3>{`Wages Information for ${selectedYearInfo.year}`}</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Salary</th>
-                <th>Contribution</th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedYearInfo.wages.map(({ salary, contribution }, index) => (
-                <tr key={index}>
-                  <td>{salary}</td>
-                  <td>{contribution}</td>
+        {selectedYearInfo && (
+          <div>
+            <h3 className="text-lg font-bold mt-4">Wages Information for {selectedYearInfo.year}</h3>
+            <table className="w-full border-collapse border border-gray-400 mt-2">
+              <thead>
+                <tr>
+                  <th className="border border-gray-400 rounded-lg px-4 py-2">Жилийн дундаж цалин</th>
+                  <th className="border border-gray-400 px-4 py-2">Сард төлвөл зохих шимтгэл </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
-  );
-};
+              </thead>
+              <tbody>
+                {selectedYearInfo.wages.map(({ salary, contribution }, index) =>   (
+                  <tr key={index}>
+                    <td className="border border-gray-400 px-4 py-2">{salary}</td>
+                    <td className="border border-gray-400 px-4 py-2">{contribution}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    );
+  };
+  
 
 export default YearsCheckboxes;

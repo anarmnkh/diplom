@@ -1,47 +1,69 @@
-import React, { useState } from 'react';
-import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
-import Link from "next/link";
+import React, { Fragment, useState, useEffect, useRef } from 'react';
+import { Link } from 'react-scroll';
+import Signin from './Signin';
+import Signup from './Signup';
+import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
 const Navbar = () => {
-  const [nav, setNav] = useState(false);
+    const [nav, setNav] = useState(false);
+    const handleClick = () => setNav(!nav);
+    const handleClose = () => setNav(false);
 
-  const handleNav = () => {
-    setNav(!nav);
-  };
+    const [showLoginForm, setShowLoginForm] = useState(false);
+    const [showRegisterForm, setShowRegisterForm] = useState(false);
 
-  return (
-    <div className='flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-[##00df9a]'>
-      <ul className='hidden md:flex'>
-        <li className='p-4'>Нүүр</li>
-        <li className='p-4'>Мэдээ, мэдээлэл</li>
-        <li className='p-4'>Хууль тогтоомж</li>
-        <li className='p-4'>Үйлчилгээ</li>
-      
-      </ul>
-      <div onClick={handleNav} className='block md:hidden'>
-          {nav ? <AiOutlineClose size={20}/> : <AiOutlineMenu size={20} />}
-      </div>
-      <ul className={nav ? 'fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-[#000300] ease-in-out duration-500' : 'ease-in-out duration-500 fixed left-[-100%]'}>
-        <h1 className='w-full text-3xl font-bold text-[#00df9a] m-4'>REACT.</h1>
-          <li className='p-4 border-b border-gray-600'>Home</li>
-          <li className='p-4 border-b border-gray-600'>Company</li>
-          <li className='p-4 border-b border-gray-600'>Resources</li>
-          <li className='p-4 border-b border-gray-600'>About</li>
-          <li className='p-4'>Contact</li>
-      </ul>
+    const toggleLoginForm = () => {
+        setShowLoginForm(!showLoginForm);
+        setShowRegisterForm(false); // Hide the register form when showing the login form
+    };
 
-      <div>
-        
-            <button className='bg-red-600 px-6 py-2 rounded cursor-pointer text-white '>Нэвтрэх</button>
-         
-            <button className='bg-red-600 px-8 py-2 rounded cursor-pointer text-white'>
-              Бүртгүүлэх
-            </button>
-          
-        </div>
-    </div>
+    const toggleRegisterForm = () => {
+        setShowRegisterForm(!showRegisterForm);
+        setShowLoginForm(false); // Hide the login form when showing the register form
+    };
+
     
 
+    
+
+  return (
+ 
+    <div className='w-screen h-[80px] z-10 bg-zinc-200 fixed drop-shadow-lg'>
+    <div className='px-2 flex justify-between items-center w-full h-full'>
+        <div className='flex items-center'>
+          <h1 className='text-3xl font-bold mr-4 sm:text-4xl'>RETIREMENT.</h1>
+          <ul className='hidden md:flex '>
+            <li><Link href="/">Hүүр</Link></li>
+            <li><Link href="/#about">Мэдээ, мэдээлэл</Link></li>
+            <li><Link  href="/legal/page">Хууль тогтоомж</Link></li>
+            <li><Link href="/#service">Үйлчилгээ</Link></li>
+          </ul>
+        </div>
+        <div className='hidden md:flex pr-4'>
+            <button className='border-none bg-transparent text-black mr-4' onClick={toggleLoginForm}> Нэвтрэх </button>
+            <button className='px-8 py-3' onClick={toggleRegisterForm}>Бүртгүүлэх </button>
+        </div>
+        <div className='md:hidden mr-4' onClick={handleClick}>
+          {!nav ? <MenuIcon className='w-5' /> : <XIcon className='w-5' />}
+        </div>
+      </div>
+
+      <ul className={!nav ? 'hidden' : 'absolute bg-zinc-200 w-full px-8'}>
+          <li className='border-b-2 border-zinc-300 w-full'><Link onClick={handleClose} to="home" duration={500}>Нүүр</Link></li>
+          <li className='border-b-2 border-zinc-300 w-full'><Link onClick={handleClose} to="news" offset={-200} duration={500}>Мэдээ, мэдээлэл</Link></li>
+          <li className='border-b-2 border-zinc-300 w-full'><Link onClick={handleClose} to="legal"  offset={-50} duration={500}>Хууль тогтоомж</Link></li>
+          <li className='border-b-2 border-zinc-300 w-full'><Link onClick={handleClose} to="platforms"  offset={-100} duration={500}>Үйлчилгээ</Link></li>
+
+
+        <div className='flex flex-col my-4'>
+            <button className='bg-transparent text-black px-8 py-3 mb-4' onClick={toggleLoginForm} >Нэвтрэх</button>
+            <button className='px-8 py-3' onClick={toggleLoginForm} >Бүртгүүлэх</button>
+        </div>
+      </ul>
+        {showLoginForm && <Signin />}
+        {showRegisterForm && <Signup />}
+    </div>
+    
   );
 };
 
