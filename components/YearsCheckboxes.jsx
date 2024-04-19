@@ -7,7 +7,7 @@ const YearsCheckboxes = () => {
     2026: false,
     2027: false,
     2028: false,
-    2029: false
+    2029: false,
   });
 
   const [selectedYearInfo, setSelectedYearInfo] = useState(null);
@@ -28,7 +28,7 @@ const YearsCheckboxes = () => {
       { salary: 2500000, contribution: 337500 },
       { salary: 3000000, contribution: 405000 },
       { salary: 3500000, contribution: 472500 },
-      { salary: 4000000, contribution: 540000 }
+      { salary: 4000000, contribution: 540000 },
     ],
    
     2026: [
@@ -45,7 +45,7 @@ const YearsCheckboxes = () => {
       { salary: 2500000, contribution: 337500 },
       { salary: 3000000, contribution: 405000 },
       { salary: 3500000, contribution: 472500 },
-      { salary: 4000000, contribution: 540000 }
+      { salary: 4000000, contribution: 540000 },
     ],
     2027: [
       { salary: 660000, contribution: 89000 },
@@ -61,7 +61,7 @@ const YearsCheckboxes = () => {
       { salary: 2500000, contribution: 337500 },
       { salary: 3000000, contribution: 405000 },
       { salary: 3500000, contribution: 472500 },
-      { salary: 4000000, contribution: 540000 }
+      { salary: 4000000, contribution: 540000 },
     ],
     2028: [
       { salary: 660000, contribution: 89000 },
@@ -77,7 +77,7 @@ const YearsCheckboxes = () => {
       { salary: 2500000, contribution: 337500 },
       { salary: 3000000, contribution: 405000 },
       { salary: 3500000, contribution: 472500 },
-      { salary: 4000000, contribution: 540000 }
+      { salary: 4000000, contribution: 540000 },
     ],
     2029: [
       { salary: 660000, contribution: 89000 },
@@ -93,52 +93,56 @@ const YearsCheckboxes = () => {
       { salary: 2500000, contribution: 337500 },
       { salary: 3000000, contribution: 405000 },
       { salary: 3500000, contribution: 472500 },
-      { salary: 4000000, contribution: 540000 }
+      { salary: 4000000, contribution: 540000 },
     ]
   };
 
   const handleCheckboxChange = (year) => {
-    setYears({ ...years, [year]: !years[year] });
-    if (years[year]) {
-      setSelectedYearInfo(null); // Deselect the year if already selected
-    } else {
-      setSelectedYearInfo({ year, wages: wages[year] }); // Select the year and display its info
-    }
+    setYears((prevYears) => {
+      const updatedYears = { ...prevYears, [year]: !prevYears[year] };
+      if (!updatedYears[year]) {
+        setSelectedYearInfo(null); // Deselect the year if already selected
+      } else {
+        setSelectedYearInfo({ year, wages: wages[year] }); // Select the year and display its info
+      }
+      return updatedYears;
+    });
   };
+  
 
   return (
  
   
-      <div className="container mx-auto py-8 rounded-md shadow-md bg-white">
+      <div className="container mx-auto py-1 rounded-md shadow-mde">
         <div className="flex flex-wrap justify-center items-center gap-4">
           {Object.keys(years).map((year) => (
-            <div key={year} className="h-10 w-24 flex  justify-center  items-center border border-gray-300 rounded-full hover:border-black">
+            <div key={year} className="h-10 w-24 flex  justify-center  items-center border-2 border-gray-600 rounded-full hover:border-white">
               <input
                 type="checkbox"
                 id={year}
                 checked={years[year]}
                 onChange={() => handleCheckboxChange(year)}
-                className="form-checkbox h-3 w-3 text-indigo-600 mr-2"
+                className="form-checkbox h-3 w-3  mr-2"
               />
-              <label htmlFor={year} className="ml-2">{year}</label>
+              <label htmlFor={year} className="ml-2 ">{year}</label>
             </div>
           ))} 
         </div>
         {selectedYearInfo && (
-          <div>
-            <h3 className="text-lg font-bold mt-4">Wages Information for {selectedYearInfo.year}</h3>
-            <table className="w-full border-collapse border border-gray-400 mt-2">
+          <div className='bg-white border rounded-lg mt-2'>
+            <h3 className="text-lg font-bold mt-4">Сайн дурын даатглын төлбөрийн хэмжээ  {selectedYearInfo.year}  он</h3>
+            <table className="w-full border-collapse  border-gray-400 mt-2">
               <thead>
                 <tr>
-                  <th className="border border-gray-400 rounded-lg px-4 py-2">Жилийн дундаж цалин</th>
-                  <th className="border border-gray-400 px-4 py-2">Сард төлвөл зохих шимтгэл </th>
+                  <th className="mx-2 border-2 rounded-lg border-gray-400 px-4 py-2 text-sm text-center">Сайн дурын даатгуулчийн өөрөө мэдүүлсэн сарын орлого </th>
+                  <th className="border-2 border-gray-400 px-4 py-1 text-sm">Сард төлвөл зохих шимтгэл </th>
                 </tr>
               </thead>
               <tbody>
                 {selectedYearInfo.wages.map(({ salary, contribution }, index) =>   (
                   <tr key={index}>
-                    <td className="border border-gray-400 px-4 py-2">{salary}</td>
-                    <td className="border border-gray-400 px-4 py-2">{contribution}</td>
+                    <td className="border-2 rounded-md border-gray-400 px-4 py-1">{salary}</td>
+                    <td className="border-2 border-gray-400 px-4 py-1">{contribution}</td>
                   </tr>
                 ))}
               </tbody>

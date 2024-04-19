@@ -19,6 +19,8 @@ export default function Home() {
     <div>
       <Navbar/>
       <Hero/>
+     
+      
       <Legal/>
       <News/>
       <Footer />

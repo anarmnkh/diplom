@@ -4,36 +4,36 @@ const SOCIAL_SECURITY_RATE = 0.135;
 const PensionRate = 0.001875;
 
 const MAX_SALARIES = {
-  2020: 4200000,
-  2021: 4200000,
-  2022: 4600000,
-  2023: 5500000,
-  2024: 4620000
+  2025: 4200000,
+  2026: 4200000,
+  2027: 4600000,
+  2028: 5500000,
+  2029: 4620000
 };
 
 const MAX_SOCIALSECURITY = {
-  2020: 567000,
-  2021: 567000,
-  2022: 621000,
-  2023: 742500,
-  2024: 623700
+  2025: 567000,
+  2026: 567000,
+  2027: 621000,
+  2028: 742500,
+  2029: 623700
 }
 
 const SalaryInfo = () => {
   const [salaries, setSalaries] = useState({
-    2020: 0,
-    2021: 0,
-    2022: 0,
-    2023: 0,
-    2024: 0
+    2025: 0,
+    2026: 0,
+    2027: 0,
+    2028: 0,
+    2029: 0
   });
 
   const [socialSecurityContributions, setSocialSecurityContributions] = useState({
-    2020: 0,
-    2021: 0,
-    2022: 0,
-    2023: 0,
-    2024: 0
+    2025: 0,
+    2026: 0,
+    2027: 0,
+    2028: 0,
+    2029: 0
   });
 
   const [totalMonthsOfSocialSecurity, setTotalMonthsOfSocialSecurity] = useState(0);
@@ -63,47 +63,52 @@ const SalaryInfo = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 rounded-md shadow-md bg-white">
-      <h2 className="text-2xl font-bold mb-4 text-center">Salary Information</h2>
-      <div className="mb-4">
-        <label htmlFor="totalMonthsInput" className="block text-sm">Total Months of Social Security Contributions:</label>
+    <div className='bg-white mt-16 border-2 rounded-md'>
+    <div className="mx-8 py-4 rounded-md  bg-white">
+      <h2 className="text-2xl font-bold mb-4 text-center">Тэтгэвэр тогтоох</h2>
+      <div >
+        <label htmlFor="totalMonthsInput" className="block text-sm">Нийгмийн даатгал төлсөн нийт сарын тоо :</label>
         <input
           id="totalMonthsInput"
           type="number"
           value={totalMonthsOfSocialSecurity}
           onChange={(e) => setTotalMonthsOfSocialSecurity(parseInt(e.target.value))}
-          className="border border-gray-300 rounded-md py-2 px-3 mt-1 block w-full focus:outline-none focus:ring focus:border-blue-500"
+          className="border border-gray-400 rounded-lg py-2 px-16 block w-98 focus:outline-none focus:ring focus:border-blue-500"
         />
       </div>
       <table className="w-full mb-4">
         <thead>
           <tr>
-            <th className="text-left py-2">Year</th>
-            <th className="text-left py-2">Salary</th>
-            <th className="text-left py-2">Social Security Contributions</th>
+            <th className=" text-center py-2">Он</th>
+            <th className="text-center  py-4 px-6">Жилийн дундаж цалин</th>
+            <th className="text-center  py-2 px-2 ">Сайн дурын нийгмийн даатгалын шимтгэл</th>
           </tr>
         </thead>
         <tbody>
           {Object.entries(salaries).map(([year, salary]) => (
-            <tr key={year}>
-              <td className="border px-4 py-2">{year}</td>
-              <td className="border px-4 py-2">
+            <tr key={year} >
+              <div className='border border-gray-500 rounded-full'>
+                <td className="px-7 py-2 text-center">{year}</td>
+              </div>
+              
+              <td className=" px-4">
                 <input
                   type="number"
                   value={salary}
                   onChange={(e) => handleSalaryChange(year, parseFloat(e.target.value))}
-                  className="border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring focus:border-blue-500"
+                  className="border border-gray-500 rounded-full py-2 px-5 focus:outline-none focus:ring focus:border-blue-500"
                 />
               </td>
-              <td className="bo rder px-4 py-2">{socialSecurityContributions[year]}</td>
+              <div className="border border-gray-500 rounded-full px-4 py-2 mr-6">{socialSecurityContributions[year]}</div>
             </tr>
           ))}
         </tbody>
       </table>
       <div>
-        <h3 className="text-xl font-semibold mb-2 text-center">Average Salary: {averageSalary.toFixed(2)}</h3>
-        <h3 className="text-xl font-semibold text-center">Pension: {pension}</h3>
+        <h3 className="text-xl font-semibold mb-2 text-left">Дундаж цалин түүнтэй адилтгах орлого: {averageSalary.toFixed(2)}</h3>
+        <h3 className="text-xl font-semibold text-lett">Тэтгэвэрийн хэмжээ: {pension}</h3>
       </div>
+    </div>
     </div>
   );
 };

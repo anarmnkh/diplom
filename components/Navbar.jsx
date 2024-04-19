@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-scroll';
 import Signin from './Signin';
 import Signup from './Signup';
@@ -22,21 +22,36 @@ const Navbar = () => {
         setShowLoginForm(false); // Hide the login form when showing the register form
     };
 
-    
+    const wrapperRef = useRef(null);
 
+    useEffect(() => {
+        // Function to close forms when clicking outside
+        const handleClickOutside = (event) => {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+                setShowLoginForm(false);
+                setShowRegisterForm(false);
+            }
+        };
+        // Attach event listener
+        document.addEventListener("mousedown", handleClickOutside);
+        // Cleanup
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
     
 
   return (
- 
+  
     <div className='w-screen h-[80px] z-10 bg-zinc-200 fixed drop-shadow-lg'>
     <div className='px-2 flex justify-between items-center w-full h-full'>
         <div className='flex items-center'>
           <h1 className='text-3xl font-bold mr-4 sm:text-4xl'>RETIREMENT.</h1>
-          <ul className='hidden md:flex '>
-            <li><Link href="/">Hүүр</Link></li>
-            <li><Link href="/#about">Мэдээ, мэдээлэл</Link></li>
-            <li><Link  href="/legal/page">Хууль тогтоомж</Link></li>
-            <li><Link href="/#service">Үйлчилгээ</Link></li>
+          <ul className='md:flex '>
+              <li><Link  href="/">Нүүр</Link></li>
+              <li><Link  href="/about">Мэдээ, мэдээлэл</Link></li>
+              <li><Link  href="/legal/page">Хууль тогтоомж</Link></li>
+              <li><Link  href="/service/page">Үйлчилгээ</Link></li>
           </ul>
         </div>
         <div className='hidden md:flex pr-4'>
@@ -63,7 +78,7 @@ const Navbar = () => {
         {showLoginForm && <Signin />}
         {showRegisterForm && <Signup />}
     </div>
-    
+   
   );
 };
 

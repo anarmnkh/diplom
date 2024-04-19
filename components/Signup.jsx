@@ -67,7 +67,7 @@ const Signup = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen flex items-center justify-center bg-black bg-opacity-25 backdrop-blur-sm py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full bg-white rounded-[25px] shadow-md overflow-hidden ">
                 <div className="py-8 px-6">
                     <h2 className="text-center text-3xl font-montserrat text-gray-900">Бүртгүүлэх</h2>
@@ -95,7 +95,7 @@ const Signup = () => {
                             </div>
                         </div>
                         <div className="px-8 mt-4">
-                            <button className="w-full py-3 px-4 border border-transparent text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-red-300">Бүртгүүлэх</button>
+                            <button className="w-full py-3 px-4 border border-transparent text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-red-400">Бүртгүүлэх</button>
                         </div> 
                         </form>
                         <div className="px-8 mt-6 flex items-center justify-between">
@@ -105,7 +105,7 @@ const Signup = () => {
                         </div> 
                     
                         <div className="px-8 mt-4">
-                            <button className="w-full py-3 px-4 border border-transparent text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-red-300">Gmail-ээр нэвтрэх</button>
+                            <button className="w-full py-3 px-4 border border-transparent text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-red-400">Gmail-ээр нэвтрэх</button>
                             {error && (
                                 <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2"> {error} </div>
                             )}
