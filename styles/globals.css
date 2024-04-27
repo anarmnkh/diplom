@@ -2,3 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    li {
+      @apply p-4
+    }
+  
+    button {
+      @apply text-white border bg-red-500 border-red-600
+      hover:bg-transparent hover:text-black rounded-md
+    }
+  }

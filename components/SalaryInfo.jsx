@@ -49,7 +49,7 @@ const SalaryInfo = () => {
     const updatedSalaries = { ...salaries, [year]: value };
     setSalaries(updatedSalaries);
   };
-  // товчлуур
+  // Товчлуур
   const calculate = () => {
     let totalSalaries = 0;
     let totalSocialSecurity = 0;
