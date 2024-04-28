@@ -1,126 +1,82 @@
-"use client";
-
-import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 
 const Signup = () => {
-
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [show, setShow] = useState(false);
+  const [show1, setShow1] = useState(false);
   
-  const router = useRouter();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!firstname || !lastname || !email || !password) {
-      setError("All fields are necessary");
-      return;
-    }
-
-    try {
-      const resUserExists = await fetch("api/userExists", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const { user } = await resUserExists.json();
-
-      if (user) {
-        setError("User already exists.");
-        return;
-      }
-
-      const res = await fetch("api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstname,
-          lastname,
-          email,
-          password,
-        }),
-      });
-
-      if (res.ok) {
-        const form = e.target;
-        form.reset();
-        router.push("/");
-      } else {
-        console.log("User registration failed.");
-      }
-    } catch (error) {
-      console.log("Error during registration: ", error);
-    }
-  };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center bg-black bg-opacity-25 backdrop-blur-sm py-12 px-4 sm:px-6 lg:px-8"
-      //onClick={() => onClose()}
-    >
-      <div className="max-w-md w-full bg-white rounded-[25px] shadow-md overflow-hidden ">
+    <div className="min-h-screen flex items-center justify-center bg-black bg-opacity-25 backdrop-blur-sm py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full bg-white rounded-[25px] shadow-md overflow-hidden">
         <div className="py-8 px-6">
           <h2 className="text-center text-3xl font-montserrat text-gray-900">
             Бүртгүүлэх
           </h2>
-          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <form className="mt-8 space-y-6">
             <div>
-              <div className="w-full px-2 py-3 flex justify-between items-center  border-b border-gray-400">
-                <label className="text-black"> Овог </label>
-                <input
-                  onChange={(e) => setLastName(e.target.value)}
-                  type="text"
-                  id="lastName"
-                  autoComplete="none"
-                  className="w-1/2 px-5 py-1 border border-gray-600 placeholder-gray-500 rounded-lg justify-between"
-                />
-              </div>
               <div className="w-full px-2 py-3 flex justify-between items-center  border-b border-gray-400">
                 <label className="text-black"> Нэр </label>
                 <input
-                  onChange={(e) => setFirstName(e.target.value)}
                   type="text"
                   id="firstName"
                   autoComplete="none"
-                  className="w-1/2 px-5 py-1 border border-gray-600 placeholder-gray-500 rounded-lg justify-between"
+                  className="w-3/5 px-5 py-1 border border-gray-600 placeholder-gray-500 rounded-lg justify-between"
                 />
               </div>
               <div className="w-full px-2 py-3 flex justify-between items-center  border-b border-gray-400">
                 <label className="text-black"> И-Мэйл хаяг </label>
                 <input
-                  onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   id="email"
                   autoComplete="none"
-                  className="w-1/2 px-5 py-1 border border-gray-600 placeholder-gray-500 rounded-lg justify-between "
-                  placeholder="E-mail"
+                  className="w-3/5 px-5 py-1 border border-gray-600 placeholder-gray-500 rounded-lg justify-between "
+                  placeholder="И-Мэйл"
                 />
               </div>
-             
+
+              <div className="w-full px-2 py-3 flex justify-between  items-center border-b border-gray-400 ">
+                <label className="text-black"> Нууц үг </label>
+                <input
+                  type={show ? "text" : "password"}
+                  name="password"
+                  autoComplete="none"
+                  className="w-3/5 px-5 py-1 border border-gray-600 placeholder-gray-500 rounded-lg justify-between"
+                  placeholder="Нууц үг"
+                />
+                <span
+                  className="icon-gray-500 absolute  ml-[22rem]"
+                  style={{ color: show ? "#4299e1" : "#7f7f7f" }}
+                  onClick={() => setShow(!show)}
+                >
+                  <HiFingerPrint size={20} />
+                </span>
+              </div>
+
               <div className="w-full px-2 py-3 flex justify-between items-center  ">
                 <label className="text-black"> Нууц үг </label>
                 <input
-                  onChange={(e) => setPassword(e.target.value)}
-                  type="password"
-                  id="password"
+                  type={show1 ? "text" : "password"}
+                  name="cpassword"
                   autoComplete="none"
-                  className="w-1/2 px-5 py-1 border border-gray-600 placeholder-gray-500 rounded-lg justify-between"
-                  placeholder="Нууц үг"
+                  className="w-3/5 px-5 py-1 border border-gray-600 placeholder-gray-500 rounded-lg justify-between"
+                  placeholder="Нууц үг баталгаажуулах"
                 />
+                <span
+                  className="icon-gray-500 absolute  ml-[22rem]"
+                  style={{ color: show1  ? "#4299e1" : "#7f7f7f" }}
+                  onClick={() => setShow1(!show1)}
+                >
+                  <HiFingerPrint size={20} />
+                </span>
               </div>
             </div>
             <div className="px-8 mt-4">
-              <button className="w-full py-3 px-4 border-2 text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-red-300">
+              <button
+                type="submit"
+                className="w-full py-3 px-4 border-2 text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-red-300"
+              >
                 Бүртгүүлэх
               </button>
             </div>
@@ -135,12 +91,6 @@ const Signup = () => {
             <button className="w-full py-3 px-4 border-2  text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-red-300">
               Gmail-ээр нэвтрэх
             </button>
-            {error && (
-              <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
-                {" "}
-                {error}{" "}
-              </div>
-            )}
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CSVReader from "react-csv-reader";
+import YearsCheckboxes from "./YearsCheckboxes";
 
 const SOCIAL_SECURITY_RATE = 0.135;
 const PensionRate = 0.001875;
@@ -45,47 +46,25 @@ const SalaryInfo = () => {
   const [averageSalary, setAverageSalary] = useState(0);
   const [pension, setPension] = useState(0);
 
+  // Нийгмийн даатгалын шимтгэлийн хэмжээ
   const handleSalaryChange = (year, value) => {
-    const updatedSalaries = { ...salaries, [year]: value };
+    let updatedSalary = value;
+    let updatedSocialSecurity = value * SOCIAL_SECURITY_RATE;
+
+    if (value > MAX_SALARIES[year]) {
+      updatedSocialSecurity = MAX_SOCIALSECURITY[year];
+    }
+
+    const updatedSalaries = { ...salaries, [year]: updatedSalary };
+    const updatedSocialSecurityContributions = {
+      ...socialSecurityContributions,
+      [year]: updatedSocialSecurity.toFixed(2),
+    };
     setSalaries(updatedSalaries);
-  };
-  // Товчлуур
-  const calculate = () => {
-    let totalSalaries = 0;
-    let totalSocialSecurity = 0;
+    setSocialSecurityContributions(updatedSocialSecurityContributions);
 
-    for (const year in salaries) {
-      totalSalaries += salaries[year];
-      totalSocialSecurity +=
-        salaries[year] > MAX_SALARIES[year]
-          ? MAX_SOCIALSECURITY[year]
-          : salaries[year] * SOCIAL_SECURITY_RATE;
-    }
-
-    // Дундаж цалин
-    const numYears = Object.keys(salaries).length;
-    const newAverageSalary = totalSalaries / numYears;
-    setAverageSalary(newAverageSalary);
-
-    // Тэтгэвэр тогтоох
-    if (totalMonthsOfSocialSecurity < 241) {
-      setPension(
-        (newAverageSalary * PensionRate * totalMonthsOfSocialSecurity).toFixed(
-          2
-        )
-      );
-    } else if (totalMonthsOfSocialSecurity === 241) {
-      setPension((newAverageSalary * Percentage).toFixed(2));
-    } else {
-      setPension(
-        (
-          newAverageSalary *
-          (Percentage + (totalMonthsOfSocialSecurity - 240) * Overtime)
-        ).toFixed(2)
-      );
-    }
-
-    setSocialSecurityContributions(totalSocialSecurity.toFixed(2));
+    // Calculate Average Salary
+    
   };
 
   // csv, txt файл уншина
@@ -133,8 +112,30 @@ const SalaryInfo = () => {
     }
   };
 
+  // Calculation handler
+  const handleCalculate = () => {
+    // Calculate Average Salary
+    const totalSalaries = Object.values(salaries).reduce((total, salary) => total + salary);
+    const numYears = Object.keys(salaries).length;
+    const newAverageSalary = totalSalaries / numYears;
+    setAverageSalary(newAverageSalary);
+  
+    // Calculate Pension
+    if (totalMonthsOfSocialSecurity < 241) {
+      const calculatedPension = (newAverageSalary * PensionRate * totalMonthsOfSocialSecurity).toFixed(2);
+      setPension(calculatedPension);
+    } else if (totalMonthsOfSocialSecurity === 241) {
+      const calculatedPension = newAverageSalary * Percentage;
+      setPension(calculatedPension);
+    } else {
+      const calculatedPension = newAverageSalary * (Percentage + (totalMonthsOfSocialSecurity - 240) * Overtime);
+      setPension(calculatedPension.toFixed(2));
+    }
+  };
+  
+
   return (
-    <div className="bg-white  border-2 rounded-md">
+    <div className="bg-white mt-16 border-2 rounded-md">
       <div className="mx-8 py-4 rounded-md  bg-white">
         <h2 className="text-2xl font-bold mb-4 text-center">
           Тэтгэвэр тогтоох
@@ -168,7 +169,6 @@ const SalaryInfo = () => {
             onChange={(event) => handleFileUpload(event)}
           />
         </div>
-
         <table className="w-full mb-4">
           <thead>
             <tr>
@@ -182,8 +182,8 @@ const SalaryInfo = () => {
           <tbody>
             {Object.entries(salaries).map(([year, salary]) => (
               <tr key={year}>
-                <div className="border border-gray-500 rounded-full px-4 py-2 text-center">
-                  <td>{year}</td>
+                <div className="border border-gray-500 rounded-full">
+                  <td className="px-7 py-2 text-center">{year}</td>
                 </div>
 
                 <td className=" px-4">
@@ -193,7 +193,7 @@ const SalaryInfo = () => {
                     onChange={(e) =>
                       handleSalaryChange(year, parseFloat(e.target.value))
                     }
-                    className="border border-gray-500 rounded-full py-2 px-4 focus:outline-none focus:ring focus:border-blue-500"
+                    className="border border-gray-500 rounded-full py-2 px-5 focus:outline-none focus:ring focus:border-blue-500"
                   />
                 </td>
                 <div className="border border-gray-500 rounded-full px-4 py-2 mr-6">
@@ -202,13 +202,13 @@ const SalaryInfo = () => {
               </tr>
             ))}
           </tbody>
-          <button
-            onClick={calculate}
-            className="bg-gray-300 hover:bg-white border-gray-500 text-black font-bold py-2 px-4 rounded mt-4"
-          >
-            Тооцоолох  
-          </button>
         </table>
+        <button
+          className="w-full py-3 px-4 border-2 text-sm font-medium rounded-full text-black bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-red-300"
+          onClick={handleCalculate}
+        >
+          Тооцоолох
+        </button>
         <div>
           <h3 className="text-xl font-semibold mb-2 text-left">
             Дундаж цалин түүнтэй адилтгах орлого: {averageSalary.toFixed(2)}

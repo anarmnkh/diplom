@@ -42,10 +42,10 @@ const Navbar = () => {
   return (
     <nav className="w-screen h-[80px] z-10 bg-zinc-200 fixed drop-shadow-lg">
       <div className="px-2 flex justify-between items-center w-full h-full">
-        <div className="flex items-center">
-          <h1 className="text-3xl font-bold mr-4 sm:text-4xl">RETIREMENT.</h1>
+        <div className="flex items-center ml-8">
+          <h1 className="text-3xl font-bold mr-6 sm:text-4xl">RETIREMENT.</h1>
 
-          <ul className="hidden md:flex space-x-4">
+          <ul className="hidden md:flex space-x-4 text-lg">
             <li>
               <Link  href="/" onClick={handleClose}>
                 Нүүр
@@ -69,7 +69,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <div className="hidden md:flex space-x-4 mr-4">
+        <div className="hidden md:flex space-x-4 mr-8 text-lg">
           <button
             className="border-none bg-transparent text-black"
             onClick={toggleLoginForm}
@@ -115,16 +115,14 @@ const Navbar = () => {
           >
             Нэвтрэх
           </button>
-          <button className="px-8 py-3" onClick={toggleLoginForm}>
+          <button className="px-8 py-3" onClick={toggleRegisterForm}>
             Бүртгүүлэх
           </button>
         </div>
       </ul>
 
       {showLoginForm && <Signin onClose={() => setShowLoginForm(false)} />}
-      {showRegisterForm && (
-        <Signup onClose={() => setShowRegisterForm(false)} />
-      )}
+      {showRegisterForm && <Signup onClose={() => setShowRegisterForm(false)} />}
     </nav>
   );
 };

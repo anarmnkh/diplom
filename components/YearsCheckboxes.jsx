@@ -130,8 +130,8 @@ const YearsCheckboxes = () => {
         ))}
       </div>
       {selectedYearInfo && (
-        <div className="bg-white border rounded-lg mt-2">
-          <h3 className="text-lg font-bold mt-4">
+        <div className="bg-white border rounded-lg mt-4">
+          <h3 className="text-lg font-bold mt-4 text-center">
             Сайн дурын даатглын төлбөрийн хэмжээ {selectedYearInfo.year} он
           </h3>
           <table className="w-full border-collapse  border-gray-400 mt-2">

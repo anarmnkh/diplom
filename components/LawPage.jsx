@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import suldImage from "../public/suld.png"; // Import the image file
 import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import Head from "next/head";
 
 
 const LawsPage = () => {
@@ -54,7 +55,11 @@ const LawsPage = () => {
   };
 
   return (
+    
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <Head>
+        <title>Хууль тогтоомж</title>
+      </Head>
       <div className="flex flex-wrap justify-center mt-16 ">
         {laws.slice(startIndex * lawsPerPage, (startIndex + 1) * lawsPerPage).map(law => (
           <div key={law.id} className="m-4 p-4 bg-white border justify-center border-gray-500 rounded-[20px] w-96">
@@ -66,7 +71,7 @@ const LawsPage = () => {
                 <a href={law.link} target="_blank" rel="noopener noreferrer" className="text-black">{law.name}</a>
               </h3>
               {law.type && <p className="text-gray-400 flex justify-center mt-4">{law.type}</p>}
-              <div  className="flex justify-center text-md mb-1 text-gray-500">
+              <div  className="flex justify-center text-md mb-1  text-gray-500">
                 <p>{law.date}</p>
               </div>
             </div>

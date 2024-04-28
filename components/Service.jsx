@@ -1,11 +1,17 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
+import Service1 from "../public/service1.jpg"; // Import the image file
 
 const ServicesPage = () => {
   // Define service data
   const services = [
-    { name: "Тэтгэвэрт гарах нас тогтоолгох", type: "Service2" },
-    { name: "Тэтгэвэр төлөвлөх", type: "Service1" }
+    {
+      name: "Тэтгэвэрт гарах нас тогтоох",
+      type: "Service2",
+      imageUrl: Service1,
+    },
+    { name: "Тэтгэвэр төлөвлөх", type: "Service1", imageUrl: Service1 },
   ];
 
   // Function to handle selecting a service
@@ -15,21 +21,41 @@ const ServicesPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-200 ">
-      <h1 className="text-6xl font-bold mb-8">Үйлчилгээ</h1>
-      <div className="flex justify-between w-3/4">
-        {/* Map through services and render buttons */}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center">
+        Үйлчилгээ
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
+        {/* Map through services and render each service */}
         {services.map((service, index) => (
-          <div key={index} className="w-1/2 p-6 border rounded-lg shadow-md bg-white">
-            <h2 className="text-center text-xl font-semibold mb-2">{service.name}</h2>
-            <Link href={`/service/${service.type}/page`}>
-              <button
-                className="w-full py-3 px-4 border-2 text-sm font-medium rounded-full text-gray-700 bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-red-300"
-                onClick={() => handleSelectService(service.name)}
-              >
-                Сонгох
-              </button>
-            </Link>
+          <div
+            key={index}
+            className="flex flex-col border rounded-lg shadow-lg bg-white overflow-hidden"
+          >
+            <div className="relative h-60 md:h-80">
+              <Image
+                src={service.imageUrl}
+                alt="Service Image"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-t-lg"
+              />
+            </div>
+            <div className="p-6 flex flex-col justify-between flex-grow">
+              <h2 className="text-xl md:text-2xl font-semibold mb-4 text-center">
+                {service.name}
+              </h2>
+              <div className="text-center">
+                <Link href={`/service/${service.type}/page`}>
+                  <button
+                    className="w-full py-3 px-4 border-2 text-sm font-medium rounded-full text-gray-700 bg-white hover:bg-gray-300  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border-red-300"
+                    onClick={() => handleSelectService(service.name)}
+                  >
+                    Сонгох
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
         ))}
       </div>

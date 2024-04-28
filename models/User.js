@@ -1,31 +1,21 @@
-import mongoose, { Schema, models } from "mongoose";
+// models/user.js
 
+import { ObjectId } from 'mongodb';
 
-const userSchema = new Schema({
-  firstname: {
-    type: String,
-    required: true,
-  },
-  lastname: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  
-  password: {
-    type: String,
-    required: true,
-  },
-  
-}, { timestamps: true });
-const User = models.User || mongoose.model("User", userSchema);
-export default User;
+export default function UserModel(db) {
+  const users = db.collection('users');
 
+  async function createUser(userData) {
+    const result = await users.insertOne(userData);
+    return result.insertedId;
+  }
 
+  async function getUserByEmail(email) {
+    return await users.findOne({ email });
+  }
 
-
-
+  return {
+    createUser,
+    getUserByEmail,
+  };
+}
