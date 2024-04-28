@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import bgImg from '../public/bg2.jpg';
 
 const Hero = () => {
   return (
@@ -16,8 +15,8 @@ const Hero = () => {
           </Link>
         </div>
         <div>
-          {/* Remove the layout and objectPosition props */}
-          <Image src={bgImg} alt="Background Image" />
+          {/* Removed the layout and objectPosition props */}
+          <Image src="/bg2.jpg" width={500} height={500} alt="Background Image" />
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ export default function Home() {
 
       <Hero/>
       <News/>
-
+     // {session ? <User session={session} /> : <Guest />}
       <Footer />
     </div>
   );

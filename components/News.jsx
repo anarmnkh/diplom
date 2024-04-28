@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowSmRightIcon } from '@heroicons/react/outline';
 import { VscLaw } from "react-icons/vsc";
 import Image from 'next/image';
-import bg from '../public/bg2.jpg';
+
 
 // Define service items
 const serviceItems = [
@@ -22,10 +22,10 @@ const serviceItems = [
 const News = () => {
   return (
     <div className="relative h-screen">
-      {/* Background Image */}
-      <Image src={bg} alt="/" layout="fill"  objectPosition="center" />
+     
+      <Image src="/bg2.jpg" layout="fill" objectFit="cover" alt="/"  objectPosition="center" />
 
-      {/* Content */}
+  
       <div className="absolute inset-0 bg-gray-900/90 flex justify-center items-center">
         <div className="max-w-4xl mx-auto text-black px-6 md:px-12 lg:px-0">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-white">Мэдээ, мэдээлэл</h2>

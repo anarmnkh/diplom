@@ -71,7 +71,7 @@ const Navbar = () => {
 
         <div className="hidden md:flex space-x-4 mr-8 text-lg">
           <button
-            className="border-none bg-transparent text-black"
+            className="border-none bg-transparent text-black "
             onClick={toggleLoginForm}
           >
             Нэвтрэх
